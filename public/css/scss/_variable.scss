@@ -1,0 +1,18 @@
+///////////////////////////////////////////
+//////////////* VARIABLE */////////////////
+///////////////////////////////////////////
+$roboto: 'Roboto', sans-serif;
+$den: #343434;
+$trang: #fff;
+$vang: #f28e00;
+$xanh: #3ac1f1;
+$do: #f05077;
+$hoverOperator:#72afd2;
+$gradient: linear-gradient(to bottom, #2980b9, #1e3c72);
+$transition: all 0.15s ease;
+@mixin transition {
+    -moz-transition: $transition;
+    -o-transition: $transition;
+    -webkit-transition: $transition;
+    transition: $transition;
+}

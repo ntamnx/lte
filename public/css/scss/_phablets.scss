@@ -1,0 +1,32 @@
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+        section.home {
+            overflow-x: hidden;
+            aside.main-sidebar {
+                top: 110px;
+                left: -265px;
+            }
+            main.content-wraper {
+                margin-left: 0px;
+                .container-fluid {
+                    .row.button-mobile {
+                        display: block;
+                        margin-bottom: -10px;
+                    }
+                    .slide {
+                        ul {
+                            li {
+                                .infomation,
+                                .news {}
+                                .infomation {
+                                    margin-bottom: 15px;
+                                }
+                            }
+                        }
+                    }
+                    .main-table.table-responsive {
+                        border: 0;
+                    }
+                }
+            }
+        }
+    }
