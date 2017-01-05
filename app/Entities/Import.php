@@ -10,20 +10,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property int $suppliers_id
  * @property int $user_id
- * @property string $date_created
  * @property float $total_money
  * @property int $status
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Import whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Import whereSuppliersId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Import whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Import whereDateCreated($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Import whereTotalMoney($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Import whereStatus($value)
  * @mixin \Eloquent
  * @property string $created_at
  * @property string $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Import whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Import whereUpdatedAt($value)
+ 
  */
 class Import extends Model {
 
@@ -31,6 +23,28 @@ class Import extends Model {
      *
      * @var type 
      */
+    public static $rules = [
+        'suppliers_id' => 'required|exits,supplies,id',
+        'user_id'      => 'required|exits,users,id',
+        'status'       => 'required|numeric|min:-1|max:2',
+        'total_money'  => 'total_money|numeric',
+    ];
+
+    /**
+     *
+     * @var type 
+     */
     public $timestamps = true;
+
+    /**
+     * 
+     * @return type
+     */
+    public  $fillable = [
+        'suppliers_id',
+        'user_id',
+        'status',
+        'total_money',
+    ];
 
 }

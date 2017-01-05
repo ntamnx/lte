@@ -15,25 +15,39 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $status
  * @property string $created_at
  * @property string $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Bill whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Bill whereCustomerId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Bill whereTotalMoney($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Bill whereUserId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Bill whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Bill whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Bill whereUpdatedAt($value)
  */
 class Bill extends Model {
 
     public static $rules = [
-        'customer_id' => 'required',
-        'user_id'     => 'required',
-        'status'      => 'required',
+        'customer_id' => 'required|exits,customers,id',
+        'user_id'     => 'required|exits,users,id',
+        'status'      => 'required|numeric|min:-1|max:1',
+        'total_money' => 'total_money|numeric',
     ];
+
     /**
      *
      * @var type 
      */
     public $timestamps = true;
+
+    /**
+     * 
+     * @return type
+     */
+    public $fillable = [
+        'customer_id',
+        'user_id',
+        'status',
+        'total_money',
+    ];
+
+    /**
+     * 
+     * @return type
+     */
+    public function billdetails() {
+        return $this->hasMany(BillDetail::class);
+    }
 
 }

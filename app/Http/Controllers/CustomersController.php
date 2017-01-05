@@ -3,19 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use App\Repositories\CustomerRepository;
+use Prettus\Repository\Criteria\RequestCriteria;
+use App\Entities\Customer;
 
-class CustomersController extends Controller
-{
+class CustomersController extends Controller {
+
+    /**
+     *
+     * @var type 
+     */
+    protected $customerRepository;
+
+    /**
+     * 
+     * @param CustomerRepository $customerRepository
+     */
+    public function __construct(CustomerRepository $customerRepository) {
+        $this->customerRepository = $customerRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(Request $request) {
+        $this->customerRepository->pushCriteria(new RequestCriteria($request));
+        $customers = $this->customerRepository->paginate(config('common.page_size'));
+        return view('customer.index')
+                        ->with('customers', $customers);
     }
 
     /**
@@ -23,9 +41,8 @@ class CustomersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        return view('customer.add');
     }
 
     /**
@@ -34,9 +51,11 @@ class CustomersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        $this->validate($request->all(), Customer::$rules);
+        $this->customerRepository->create($request->all());
+        \Session::flash('flash_success', trans('common.CREATE_SUCCESS'));
+        return route('admin.customer.index');
     }
 
     /**
@@ -45,8 +64,7 @@ class CustomersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -56,8 +74,10 @@ class CustomersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
+        $customer = $this->customerRepository->find($id);
+        return view('customers.index')
+                        ->with('customer', $customer);
         //
     }
 
@@ -68,9 +88,11 @@ class CustomersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $this->validate($request->all(), Customer::$rules);
+        $this->customerRepository->update($request->all(), $id);
+        \Session::flash('flash_success', trans('UPDATE_SUCCESS'));
+        return route('admin.customers.index');
     }
 
     /**
@@ -79,8 +101,10 @@ class CustomersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $this->customerRepository->delete($id);
+        \Session::flash('flash_success', trans('common.DELETE_SUCCES'));
+        return \Redirect::back();
     }
+
 }

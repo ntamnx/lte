@@ -14,18 +14,33 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $address
  * @property string $created_at
  * @property string $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Supply whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Supply whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Supply wherePhone($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Supply whereAddress($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Supply whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Supply whereUpdatedAt($value)
  */
-class Supply extends Model
-{
-   /**
+class Supply extends Model {
+
+    /**
+     *
+     * @var type 
+     */
+    public static $rules = [
+        'name'    => 'required',
+        'phone'   => 'required',
+        'address' => 'required',
+    ];
+
+    /**
      *
      * @var type 
      */
     public $timestamps = false;
+
+    /**
+     *
+     * @var type 
+     */
+    public $fillable = [
+        'name',
+        'phone',
+        'address',
+    ];
+
 }

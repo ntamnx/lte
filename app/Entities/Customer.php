@@ -37,7 +37,7 @@ class Customer extends Model {
      *
      * @var type 
      */
-    public $timestamps   = true;
+    public $timestamps = true;
 
     /**
      *
@@ -45,8 +45,8 @@ class Customer extends Model {
      */
     protected $fillable = [
         'name',
-        'description',
-        'parent_category_id',
+        'address',
+        'phone',
     ];
 
 }

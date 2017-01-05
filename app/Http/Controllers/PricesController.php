@@ -7,6 +7,8 @@ use App\Http\Requests;
 use App\Repositories\PriceRepository;
 use App\Repositories\ProductRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
+use App\Criteria\PriceCriteria;
+use App\Entities\Price;
 
 class PricesController extends Controller {
 
@@ -31,6 +33,7 @@ class PricesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request) {
+        $this->priceRepository->pushCriteria(new PriceCriteria($request));
         $this->priceRepository->pushCriteria(new RequestCriteria($request));
         $prices = $this->priceRepository->paginate(config('common.page_size'));
         $prices->setPatch(\URL::current());
@@ -57,7 +60,10 @@ class PricesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+        $this->validate($request->all(), Price::$rules);
+        $this->priceRepository->create($request->all());
+        \Session::flash('flash_success', trans('common.CREATE_SUCCESS'));
+        return route('admin.prices.index');
     }
 
     /**
@@ -92,7 +98,10 @@ class PricesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+        $this->validate($request->all(), Price::$rules);
+        $this->priceRepository->update($request->all(), $id);
+        \Session::flash('flash_success', trans('common.UPDATE_SUCCESS'));
+        return route('admin.prices.index');
     }
 
     /**

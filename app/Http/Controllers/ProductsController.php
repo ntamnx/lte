@@ -60,7 +60,6 @@ class ProductsController extends Controller {
      */
     public function store(Request $request) {
         $this->validate($request, Product::$rules);
-        pr($request->all());
         $this->productRepository->create($request->all());
         \Session::flash('flash_sucess', trans('common.CREATE_SUCESS'));
         return redirect(route('admin.products.index'));

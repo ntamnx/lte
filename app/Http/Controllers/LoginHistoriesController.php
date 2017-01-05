@@ -3,19 +3,28 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use App\Repositories\UserLoginRepository;
+use Prettus\Repository\Criteria\RequestCriteria;
 
-class LoginHistoriesController extends Controller
-{
+class LoginHistoriesController extends Controller {
+
+    protected $userLogin;
+
+    public function __construct(UserLoginRepository $userLogin) {
+        $this->userLogin = $userLogin;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(Request $request) {
+        $this->userLogin->pushCriteria(new RequestCriteria($request));
+        $loginHistory = $this->userLogin->paginate(config('common.page_size'));
+        return view('login_history.index')
+                        ->with('loginHistory', $loginHistory);
     }
 
     /**
@@ -23,8 +32,7 @@ class LoginHistoriesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -34,8 +42,7 @@ class LoginHistoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -45,8 +52,7 @@ class LoginHistoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -56,8 +62,7 @@ class LoginHistoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
@@ -68,8 +73,7 @@ class LoginHistoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //
     }
 
@@ -79,8 +83,8 @@ class LoginHistoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {
         //
     }
+
 }

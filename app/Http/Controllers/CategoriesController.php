@@ -102,13 +102,8 @@ class CategoriesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $categories = $this->categoryRepository->find($id);
-        try {
-            $categories->delete();
-            \Session::flash('flash_success', trans('common.DELETE_SUCCESS'));
-        } catch (Exception $ex) {
-            
-        }
+        $this->categoryRepository->delete($id);
+        \Session::flash('flash_success', trans('common.DELETE_SUCCESS'));
         return \Redirect::back();
     }
 

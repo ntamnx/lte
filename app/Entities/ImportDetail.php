@@ -15,19 +15,40 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $status
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\ImportDetail whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\ImportDetail whereProductId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\ImportDetail whereQuantity($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\ImportDetail wherePrice($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\ImportDetail whereImportId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\ImportDetail whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\ImportDetail whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\ImportDetail whereUpdatedAt($value)
  * @mixin \Eloquent
  */
 class ImportDetail extends Model {
 
-    protected $table  = 'import_detail';
+    protected $table = 'import_detail';
+
+    /**
+     *
+     * @var type 
+     */
+    public static $rules = [
+        'import_id'  => 'required|exits,imports,id',
+        'product_id' => 'required|exits,products,id',
+        'price'      => 'required|numeric',
+        'quantity'   => 'required|numeric',
+        'status'     => 'required|numeric|min:-1|max:3',
+    ];
+
+    /**
+     *
+     * @var type 
+     */
     public $timestamp = false;
+
+    /**
+     *
+     * @var type 
+     */
+    public $fillable = [
+        'import_id',
+        'product_id',
+        'price',
+        'quantity',
+        'status',
+    ];
 
 }
