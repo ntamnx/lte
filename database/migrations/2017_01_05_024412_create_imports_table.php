@@ -17,10 +17,9 @@ class CreateImportsTable extends Migration {
 			$table->increments('id');
 			$table->integer('suppliers_id')->unsigned()->index('FK_imports_suppliers');
 			$table->integer('user_id')->unsigned()->index('FK_imports_users');
-			$table->date('date_created');
 			$table->float('total_money', 10, 0);
 			$table->integer('status')->default(1);
-                        $table->timestamps();
+			$table->timestamps();
 		});
 	}
 

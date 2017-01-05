@@ -13,6 +13,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $parent_category_id
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\Category whereId($value)
  * @mixin \Eloquent
+ * @property string $created_at
+ * @property string $updated_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Category whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Category whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Category whereParentCategoryId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Category whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Category whereUpdatedAt($value)
  */
 class Category extends Model {
 

@@ -20,7 +20,7 @@ class CreateBillDetailTable extends Migration {
 			$table->integer('price')->unsigned();
 			$table->integer('quanlity')->unsigned();
 			$table->integer('status')->default(1);
-                        $table->timestamps();
+			$table->timestamps();
 		});
 	}
 

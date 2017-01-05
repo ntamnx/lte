@@ -16,10 +16,9 @@ class CreateUserLoginTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->integer('user_id')->unsigned()->index('FK_user_login_users');
-			$table->date('date_login');
 			$table->string('ip', 15);
 			$table->string('borrow');
-                        $table->timestamps();
+			$table->timestamps();
 		});
 	}
 

@@ -11,10 +11,20 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property string $description
  * @property int $quanlity
- * @property string $image
  * @property int $status
  * @property int $category_id
  * @mixin \Eloquent
+ * @property string $created_at
+ * @property string $updated_at
+ * @property-read \App\Entities\Category $category
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Product whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Product whereName($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Product whereDescription($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Product whereQuanlity($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Product whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Product whereCategoryId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Product whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Product whereUpdatedAt($value)
  */
 class Product extends Model {
 
@@ -26,7 +36,6 @@ class Product extends Model {
         'name'        => 'required|min:6|max:255|unique:products,name',
         'description' => 'required|min:6|max:500',
         'quanlity'    => 'numeric',
-        'image'       => 'required|mimes:jpeg,jpg,png|max:1024',
         'status'      => 'numeric',
         'category_id' => 'required|exists:categories,id',
     ];

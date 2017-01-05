@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * App\Entities\Price
+ *
  * @property int $id
  * @property int $product_id
  * @property string $date_created
@@ -13,6 +14,13 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $price
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\Price whereId($value)
  * @mixin \Eloquent
+ * @property string $created_at
+ * @property string $updated_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Price whereProductId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Price whereSale($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Price wherePrice($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Price whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Price whereUpdatedAt($value)
  */
 class Price extends Model {
 
@@ -47,6 +55,6 @@ class Price extends Model {
      *
      * @var type 
      */
-    public $timestamps  = false;
+    public $timestamps  = true;
 
 }

@@ -19,9 +19,8 @@ class CreateImportDetailTable extends Migration {
 			$table->integer('quantity')->unsigned();
 			$table->integer('price')->unsigned();
 			$table->integer('import_id')->unsigned()->index('FK_import_detail_imports');
-			$table->date('date_created');
 			$table->integer('status')->default(1);
-                        $table->timestamps();
+			$table->timestamps();
 		});
 	}
 

@@ -10,10 +10,18 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property int $id
  * @property int $customer_id
- * @property string $date_created
  * @property int $total_money
  * @property int $user_id
  * @property int $status
+ * @property string $created_at
+ * @property string $updated_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Bill whereId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Bill whereCustomerId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Bill whereTotalMoney($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Bill whereUserId($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Bill whereStatus($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Bill whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Bill whereUpdatedAt($value)
  */
 class Bill extends Model {
 
@@ -26,6 +34,6 @@ class Bill extends Model {
      *
      * @var type 
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
 }

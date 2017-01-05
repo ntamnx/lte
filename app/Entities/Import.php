@@ -20,6 +20,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\Import whereTotalMoney($value)
  * @method static \Illuminate\Database\Query\Builder|\App\Entities\Import whereStatus($value)
  * @mixin \Eloquent
+ * @property string $created_at
+ * @property string $updated_at
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Import whereCreatedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|\App\Entities\Import whereUpdatedAt($value)
  */
 class Import extends Model {
 
@@ -27,6 +31,6 @@ class Import extends Model {
      *
      * @var type 
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
 }
