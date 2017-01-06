@@ -9,11 +9,11 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property int $product_id
- * @property string $date_created
  * @property float $sale
  * @property int $price
  * @mixin \Eloquent
  * @property string $created_at
+ * @property string $updated_at
  */
 class Price extends Model {
 
@@ -42,6 +42,6 @@ class Price extends Model {
      *
      * @var type 
      */
-    public $timestamps  = true;
+    public $timestamps = true;
 
 }

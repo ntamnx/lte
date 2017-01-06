@@ -14,12 +14,6 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property string $created_at
  * @property string $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Customer whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Customer whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Customer whereAddress($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Customer wherePhone($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Customer whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\Customer whereUpdatedAt($value)
  */
 class Customer extends Model {
 
