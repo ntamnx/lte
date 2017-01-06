@@ -1,68 +1,44 @@
 @extends('app')
 @section('htmlheader_title')
-{{trans('title.category')}}
+{{trans('title.supply')}}
 @endsection
 @section('css')
-<link href="{{ asset('/modules/categories.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('main-content')
 <div class="row">
-    <div class="col-sm-9">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">{{trans('title.addCategory')}}</h3>
+    <div class="col-sm-12">
+        <div class="panel panel-info">
+            <div class="panel-heading text-center">
+                {{trans('title.createSupply')}}
             </div>
-            <form role="form">
-                <div class="box-body">
-                    <input type="hidden" id="category_id" name="category_id" value=""/>
+            <div class="panel-body">
+                <form action="{{route('admin.supplies.store')}}" method="POST" id="frm-add" enctype="multipart/form-data">
+                    <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                     <div class="form-group">
-                        <label>{{trans('title.name')}}</label>
-                        <input type="text" name="name" class="form-control" id="exampleInputEmail1" placeholder="{{trans('placeholder.enterCategory')}}">
+                        <label>{{trans('title.category')}}</label>
+                        <select name="product_id" class="form-control">
+                            @foreach($products as $product)
+                            <option value="{{$product->id}}" {{old('product_id') == $product->id ?'selected':''}}>{{$product->name}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>{{trans('title.description')}}</label>
-                        <textarea id="description" name="description" rows="10" cols="80">
-                        </textarea>
+                        <label>{{trans('title.price')}}</label>
+                        <input type="text" name="price" class="form-control" value="{{old('price')}}">
                     </div>
-                </div>
-                <!-- /.box-body -->
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-primary" id="btn_add">Submit</button>
-                </div>
-            </form>
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="box box-primary">
-            <div class="box-header with-border">
-                <h3 class="box-title">{{trans('title.parentCategories')}}</h3>
-            </div>
-            <div class="categoriparent">
-                <div class="portlet" data-id='1'>
-                    <div class="portlet-header">Shopping</div>
-                    <div class="portlet-content" style="display: none">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-                </div>
-            </div>
-            <div class="box-header with-border">
-                <h3 class="box-title">{{trans('title.listCategories')}}</h3>
-            </div>
-            <div class="column">
-                <div class="portlet" data-id='2'>
-                    <div class="portlet-header">Links</div>
-                    <div class="portlet-content" style="display: none">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-                </div>
-
-                <div class="portlet" data-id='3'>
-                    <div class="portlet-header">Images</div>
-                    <div class="portlet-content" style="display: none">Lorem ipsum dolor sit amet, consectetuer adipiscing elit</div>
-                </div>
+                    <div class="form-group">
+                        <label>{{trans('title.sale')}}</label>
+                        <input type="text" name="sale" class="form-control" value="{{old('sale')}}" >
+                    </div>
+                    <div class="panel-footer">
+                        <button type="submit" class="btn btn-primary" id="btn_add">{{trans('title.submit')}}</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 @endsection
 @section('js')
-<script src="{{ asset('/modules/category.js') }}" type="text/javascript"></script>
-<script>app.categories.init()</script>
-<script>CKEDITOR.replace('description');</script>
+{!! JsValidator::make(App\Entities\Price::$rules,[],[],'#frm-add')!!}
 @endsection

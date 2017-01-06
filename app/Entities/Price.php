@@ -35,7 +35,6 @@ class Price extends Model {
         'product_id',
         'sale',
         'price',
-        'date_created',
     ];
 
     /**
@@ -43,5 +42,12 @@ class Price extends Model {
      * @var type 
      */
     public $timestamps = true;
+
+    /**
+     * 
+     */
+    public function product() {
+        return $this->belongsTo(Product::class);
+    }
 
 }

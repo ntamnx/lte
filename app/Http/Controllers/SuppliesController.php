@@ -76,7 +76,7 @@ class SuppliesController extends Controller {
      */
     public function edit($id) {
         $supply = $this->supplyRepository->find($id);
-        return view('supplies.index')
+        return view('supplies.edit')
                         ->with('supply', $supply);
     }
 

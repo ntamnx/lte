@@ -26,12 +26,11 @@ Home
                 <tbody>
                     @foreach($bills as $bill)
                     <tr>
-                        <td><a href="{{route('admin.prices.index',['products'=>$price->product->id])}}">{{$price->product->name}}</a></td>
                         <td>{{$bill->customer->name}}</td>
                         <td>{{$bill->user->name}}</td>
                         <td>{{$bill->status}}</td>
-                        <td>{{$price->total_money}}</td>
-                        <td>{{$price->created_date}}</td>
+                        <td>{{$bill->total_money}}</td>
+                        <td>{{$bill->created_at}}</td>
                         <td><a class="btn btn-default" href="{{route('admin.bills.show',$bill->id)}}">{{trans('title.show')}}</a></td>
                         <td><a class="btn btn-default" href="{{route('admin.bills.edit',$bill->id)}}">{{trans('title.update')}}</a></td>
                         <td>
@@ -46,7 +45,7 @@ Home
                     @endforeach
                 </tbody>
             </table>
-            {{$prices}}
+            {{$bills}}
         </div>
         <!-- /.box-body -->
     </div>

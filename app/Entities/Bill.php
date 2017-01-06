@@ -50,4 +50,20 @@ class Bill extends Model {
         return $this->hasMany(BillDetail::class);
     }
 
+    /**
+     * 
+     * @return type
+     */
+    public function customer() {
+        return $this->belongsTo(Customer::class);
+    }
+
+    /**
+     * 
+     * @return type
+     */
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
 }

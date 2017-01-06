@@ -11,6 +11,7 @@ use \App\Repositories\ProductRepository;
 use \App\Repositories\CategoryRepository;
 
 class ProductsController extends Controller {
+
     /**
      *
      * @var type 
@@ -59,8 +60,13 @@ class ProductsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $this->validate($request, Product::$rules);
-        $this->productRepository->create($request->all());
+        $this->validate($request->all(), Product::$rules);
+        $product = $this->productRepository->create($request->all());
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $image) {
+                $product->addMedia($image)->toCollection('products');
+            }
+        }
         \Session::flash('flash_sucess', trans('common.CREATE_SUCESS'));
         return redirect(route('admin.products.index'));
     }
@@ -72,7 +78,9 @@ class ProductsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        //
+        $product = $this->productRepository->find($id);
+        return view('products.show')
+                        ->with('product', $product);
     }
 
     /**
@@ -82,7 +90,9 @@ class ProductsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        //
+        $product = $this->productRepository->find($id);
+        return view('products.edit')
+                        ->with('product', $product);
     }
 
     /**
@@ -93,7 +103,15 @@ class ProductsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+        $this->validate($request->all(), Product::$rules);
+        $product = $this->productRepository->update($request->all(), $id);
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $image) {
+                $product->addMedia($image)->toCollection('products');
+            }
+        }
+        \Session::flash('flash_sucess', trans('common.UPDATE_SUCCESS'));
+        return redirect(route('admin.products.index'));
     }
 
     /**
@@ -103,7 +121,9 @@ class ProductsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        //
+        $this->productRepository->delete($id);
+        \Session::flash('flash_sucess', trans('common.DELETE_SUCCESS'));
+        return redirect()->back();
     }
 
 }

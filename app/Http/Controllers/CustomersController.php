@@ -32,7 +32,7 @@ class CustomersController extends Controller {
     public function index(Request $request) {
         $this->customerRepository->pushCriteria(new RequestCriteria($request));
         $customers = $this->customerRepository->paginate(config('common.page_size'));
-        return view('customer.index')
+        return view('customers.index')
                         ->with('customers', $customers);
     }
 
@@ -42,7 +42,7 @@ class CustomersController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('customer.add');
+        return view('customers.add');
     }
 
     /**
@@ -76,7 +76,7 @@ class CustomersController extends Controller {
      */
     public function edit($id) {
         $customer = $this->customerRepository->find($id);
-        return view('customers.index')
+        return view('customers.edit')
                         ->with('customer', $customer);
         //
     }

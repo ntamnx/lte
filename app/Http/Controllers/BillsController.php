@@ -32,7 +32,7 @@ class BillsController extends Controller {
     public function index(Request $request) {
         $this->billRepository->pushCriteria(new RequestCriteria($request));
         $bills = $this->billRepository->paginate(config('common.page_size'));
-        return view('bill.index')
+        return view('bills.index')
                         ->with('bills', $bills);
     }
 

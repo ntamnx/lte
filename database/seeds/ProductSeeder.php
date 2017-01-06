@@ -26,6 +26,15 @@ class ProductSeeder extends Seeder {
                             'category_id' => $category->id,
                 ]);
                 foreach (range(1, 5) as $indexofImage) {
+                    \App\Entities\Price::create([
+                        'product_id' => $product->id,
+                        'sale'       => $faker->numberBetween(10, 20),
+                        'price'      => $faker->numberBetween(100000, 900000),
+                        'created_at' => $faker->dateTimeBetween('-1 month', 'now'),
+                        'updated_at' => $faker->dateTimeBetween('-1 month', 'now'),
+                    ]);
+                }
+                foreach (range(1, 5) as $indexofImage) {
                     $product->addMediaFromUrl($files->random())->toCollection('products');
                 }
                 echo 'Products ' . $indexOfProduct . PHP_EOL;

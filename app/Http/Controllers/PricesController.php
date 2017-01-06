@@ -36,7 +36,7 @@ class PricesController extends Controller {
         $this->priceRepository->pushCriteria(new PriceCriteria($request));
         $this->priceRepository->pushCriteria(new RequestCriteria($request));
         $prices = $this->priceRepository->paginate(config('common.page_size'));
-        $prices->setPatch(\URL::current());
+        $prices->setPath(\URL::current());
         return view('prices.index')
                         ->with('prices', $prices);
     }
