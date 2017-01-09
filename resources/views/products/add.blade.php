@@ -6,7 +6,7 @@
 @endsection
 @section('main-content')
 <div class="row">
-    <div class="col-sm-9">
+    <div class="col-sm-12">
         <div class="panel panel-info">
             <div class="panel-heading text-center">
                 {{trans('title.createProduct ')}}
@@ -41,22 +41,12 @@
 
                     <div class="form-group">
                         <label>{{trans('title.image')}}</label>
-                        <input type="file" name="image" class="form-control">
+                        <input id="input-2" name="image[]" type="file" class="file" multiple data-show-upload="false" data-show-caption="true">
                     </div>
                     <div class="panel-footer">
                         <button type="submit" class="btn btn-primary" id="btn_add">{{trans('title.submit')}}</button>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-3">
-        <div class="panel panel-primary">
-            <div class="panel-heading text-center">{{trans('title.category')}}</div>
-            <div class="panel-body">
-                @for($i =0 ; $i<5 ;$i++)
-                <input type="file" class="form-control" name="image_detail[]"/>
-                @endfor
             </div>
         </div>
     </div>

@@ -68,7 +68,7 @@ class ProductsController extends Controller {
             }
         }
         \Session::flash('flash_sucess', trans('common.CREATE_SUCESS'));
-        return redirect(route('admin.products.index'));
+        return redirect()->route('admin.products.index');
     }
 
     /**
