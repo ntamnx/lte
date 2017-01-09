@@ -52,10 +52,10 @@ class SuppliesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $this->validate($request->all(), Supply::$rules);
+        $this->validate($request, Supply::$rules);
         $this->supplyRepository->create($request->all());
         \Session::flash('flash_success', trans('common.CREATE_SUCCESS'));
-        return route('admin.supplies.index');
+        return redirect()->route('admin.supplies.index');
     }
 
     /**
@@ -88,10 +88,11 @@ class SuppliesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        $this->validate($request->all(), Supply::$rules);
+        $rules = ['name' => 'required|unique:supplies,name,' . $id] + Supply::$rules;
+        $this->validate($request, $rules);
         $this->supplyRepository->update($request->all(), $id);
-        \Session::flash('flash_success', trans('common.UPDATE_SUCESS'));
-        return route('admin.supplies.index');
+        \Session::flash('flash_success', trans('common.UPDATE_SUCCESS'));
+        return redirect()->route('admin.supplies.index');
     }
 
     /**

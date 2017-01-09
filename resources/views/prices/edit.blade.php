@@ -14,6 +14,7 @@
             <div class="panel-body">
                 <form action="{{route('admin.prices.update',$price->id)}}" method="POST" id="frm-add" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+                    <input type="hidden" name="_method" value="PUT"/>
                     <div class="form-group">
                         <label>{{trans('title.product')}}</label>
                         <select name="product_id" class="form-control">

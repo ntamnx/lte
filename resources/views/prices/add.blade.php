@@ -12,7 +12,7 @@
                 {{trans('title.createSupply')}}
             </div>
             <div class="panel-body">
-                <form action="{{route('admin.supplies.store')}}" method="POST" id="frm-add" enctype="multipart/form-data">
+                <form action="{{route('admin.prices.store')}}" method="POST" id="frm-add" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                     <div class="form-group">
                         <label>{{trans('title.category')}}</label>

@@ -52,10 +52,10 @@ class CustomersController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $this->validate($request->all(), Customer::$rules);
+        $this->validate($request, Customer::$rules);
         $this->customerRepository->create($request->all());
         \Session::flash('flash_success', trans('common.CREATE_SUCCESS'));
-        return route('admin.customer.index');
+        return redirect()->route('admin.customers.index');
     }
 
     /**
@@ -89,10 +89,10 @@ class CustomersController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        $this->validate($request->all(), Customer::$rules);
+        $this->validate($request, Customer::$rules);
         $this->customerRepository->update($request->all(), $id);
         \Session::flash('flash_success', trans('UPDATE_SUCCESS'));
-        return route('admin.customers.index');
+        return redirect()->route('admin.customers.index');
     }
 
     /**

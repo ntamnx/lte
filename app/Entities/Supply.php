@@ -22,7 +22,7 @@ class Supply extends Model {
      * @var type 
      */
     public static $rules = [
-        'name'    => 'required',
+        'name'    => 'required|unique:supplies,name',
         'phone'   => 'required',
         'address' => 'required',
     ];

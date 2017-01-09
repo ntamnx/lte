@@ -22,7 +22,7 @@ class Customer extends Model {
      * @var type 
      */
     public static $rules = [
-        'name'    => 'required|max:100|min:6|unique:customers,name',
+        'name'    => 'required',
         'address' => 'required|max:255|min:6',
         'phone'   => 'required|max:15|min:10',
     ];

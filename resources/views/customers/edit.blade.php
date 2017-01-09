@@ -12,8 +12,9 @@
                 {{trans('title.updateCustomer')}}
             </div>
             <div class="panel-body">
-                <form action="{{route('admin.customers.update',$customer->id)}}" method="POST" id="frm-add" enctype="multipart/form-data">
+                <form action="{{route('admin.customers.update',$customer->id)}}" method="POST" id="frm-edit" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+                    <input type="hidden" name="_method" value="PUT"/>
                     <div class="form-group">
                         <label>{{trans('title.name')}}</label>
                         <input type="text" name="name" class="form-control" value="{{$customer->name}}">
@@ -36,5 +37,5 @@
 </div>
 @endsection
 @section('js')
-{!! JsValidator::make(App\Entities\Customer::$rules,[],[],'#frm-add')!!}
+{!! JsValidator::make(App\Entities\Customer::$rules,[],[],'#frm-edit')!!}
 @endsection
