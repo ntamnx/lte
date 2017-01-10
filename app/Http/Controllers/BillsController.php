@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Repositories\BillRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Entities\Bill;
+use App\Repositories\BillDetailRepository;
 
 class BillsController extends Controller {
 
@@ -15,13 +16,15 @@ class BillsController extends Controller {
      * @var type 
      */
     protected $billRepository;
+    protected $billDetailRepository;
 
     /**
      * 
      * @param BillRepository $billRepository
      */
-    public function __construct(BillRepository $billRepository) {
+    public function __construct(BillRepository $billRepository, BillDetailRepository $billDetailRepository) {
         $this->billRepository = $billRepository;
+        $this->billDetailRepository = $billDetailRepository;
     }
 
     /**
@@ -52,10 +55,22 @@ class BillsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $this->validate($request->all(), Bill::$rules);
-        $this->billRepository->create($request->all());
+        DB::beginTransaction();
+        try {
+            $this->validate($request, Bill::$rules);
+            $this->billRepository->create($request->all());
+            foreach ($request->billDetail as $billDetail) {
+                $this->validate($billDetail, BillDetail::$rules);
+                $this->billDetailRepository->create($billDetail);
+            }
+            DB::commit();
+        } catch (Exception $ex) {
+            DB::rollback();
+            dd($ex->getMessage());
+            return;
+        }
         \Session::flash('flash_success', trans('common.CREATE_SUCCESS'));
-        return round('admin.bill.index');
+        return redirect()->route('admin.imports.index');
     }
 
     /**
@@ -89,7 +104,7 @@ class BillsController extends Controller {
      */
     public function update(Request $request, $id) {
         $this->validate($request->all(), Bill::$rules);
-        $this->billRepository->update($request->all(),$id);
+        $this->billRepository->update($request->all(), $id);
         \Session::flash('flash_success', trans('common.UPPDATE_SUCCESS'));
         return round('admin.bill.index');
     }

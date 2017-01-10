@@ -3,19 +3,40 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use App\Repositories\ImportRopository;
+use Prettus\Repository\Criteria\RequestCriteria;
+use App\Entities\Import;
+use App\Repositories\ImportDetailRopository;
+use App\Entities\ImportDetail;
 
-class ImportsController extends Controller
-{
+class ImportsController extends Controller {
+
+    /**
+     * 
+     */
+    protected $importRepository;
+    protected $importDetailRepository;
+
+    /**
+     * 
+     * @param ImportRopository $importRepository
+     */
+    public function __construct(ImportRopository $importRepository, ImportDetailRopository $importDetailRepository) {
+        $this->importRepository       = $importRepository;
+        $this->importDetailRepository = $importDetailRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(Request $request) {
+        $this->importRepository->pushCriteria(new RequestCriteria($request));
+        $bills = $this->importRepository->paginate(config('common.page_size'));
+        return view('bills.index')
+                        ->with('bills', $bills);
     }
 
     /**
@@ -23,9 +44,8 @@ class ImportsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
+    public function create() {
+        return view('bills.create');
     }
 
     /**
@@ -34,9 +54,23 @@ class ImportsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        DB::beginTransaction();
+        try {
+            $this->validate($request, Import::$rules);
+            $this->importRepository->create($request->all());
+            foreach ($request->importDetail as $importDetail) {
+                $this->validate($importDetail, ImportDetail::$rules);
+                $this->importDetailRepository->create($importDetail);
+            }
+            DB::commit();
+        } catch (Exception $ex) {
+            DB::rollback();
+            dd($ex->getMessage());
+            return;
+        }
+        \Session::flash('success', trans('common.CREATE_SUCCESS'));
+        return redirect()->route('admin.imports.index');
     }
 
     /**
@@ -45,9 +79,10 @@ class ImportsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id) {
+        $import = $this->importRepository->find($id);
+        return view('imports.show')
+                        ->with('import', $import);
     }
 
     /**
@@ -56,8 +91,7 @@ class ImportsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id) {
         //
     }
 
@@ -68,8 +102,7 @@ class ImportsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, $id) {
         //
     }
 
@@ -79,8 +112,10 @@ class ImportsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $this->importRepository->delete($id);
+        \Session::flash('flash_sucess', trans('common.DELETE_SUCCESS'));
+        return redirect()->back();
     }
+
 }

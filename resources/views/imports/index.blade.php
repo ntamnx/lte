@@ -26,16 +26,16 @@ Home
                 <tbody>
                     @foreach($imports as $import)
                     <tr>
-                        <td><a href="{{route('admin.imports.index',['products'=>$price->product->id])}}">{{$price->product->name}}</a></td>
+                        <td><a href="{{route('admin.imports.index',['products'=>$import->product->name])}}">{{$import->product->name}}</a></td>
                         <td>{{$import->supply->name}}</td>
                         <td>{{$import->user->name}}</td>
-                        <td>{{$bill->status}}</td>
-                        <td>{{$price->total_money}}</td>
-                        <td>{{$price->created_date}}</td>
-                        <td><a class="btn btn-default" href="{{route('admin.imports.show',$bill->id)}}">{{trans('title.show')}}</a></td>
-                        <td><a class="btn btn-default" href="{{route('admin.imports.edit',$bill->id)}}">{{trans('title.update')}}</a></td>
+                        <td>{{$import->status}}</td>
+                        <td>{{$import->total_money}}</td>
+                        <td>{{$import->created_at}}</td>
+                        <td><a class="btn btn-default" href="{{route('admin.imports.show',$import->id)}}">{{trans('title.show')}}</a></td>
+                        <td><a class="btn btn-default" href="{{route('admin.imports.edit',$import->id)}}">{{trans('title.update')}}</a></td>
                         <td>
-                            <form method="POST" action="{{route('admin.bills.destroy',$bill->id)}}">
+                            <form method="POST" action="{{route('admin.imports.destroy',$import->id)}}">
                                 <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                                 <input type="hidden" name="_method" value="DELETE"/>
                                 <button class="btn btn-danger" type="submit">{{trans('title.delete')}}</button>
