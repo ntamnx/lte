@@ -14,7 +14,6 @@
             <div class="panel-body">
                 <form action="{{route('admin.products.store')}}" method="POST" id="frm-add" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-
                     <div class="form-group">
                         <label>{{trans('title.category')}}</label>
                         <select name="category_id" class="form-control">
@@ -26,11 +25,6 @@
                     <div class="form-group">
                         <label>{{trans('title.name')}}</label>
                         <input type="text" name="name" class="form-control"  placeholder="{{trans('placeholder.enterCategory')}}">
-                    </div>
-                    <div class="form-group">
-                        <label>{{trans('title.quanlity')}}</label>
-                        <input type="text" name="quanlity" class="form-control"  placeholder="{{trans('placeholder.enterCategory')}}">
-
                     </div>
                     <div class="form-group">
                         <label>{{trans('title.description')}}</label>

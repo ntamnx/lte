@@ -30,8 +30,6 @@ class Product extends Model implements HasMedia {
     public static $rules = [
         'name'        => 'required|min:6|max:255|unique:products,name',
         'description' => 'required|min:6|max:500',
-        'quanlity'    => 'numeric',
-        'status'      => 'numeric|min:-1|max:2',
         'category_id' => 'required|exists:categories,id',
     ];
 
@@ -48,12 +46,12 @@ class Product extends Model implements HasMedia {
         'name',
         'description',
         'quanlity',
-        'image',
-        'status',
-        'category_id',
     ];
 
-
+    /**
+     * 
+     * @return type
+     */
     public function category() {
         return $this->belongsTo(Category::class);
     }

@@ -46,7 +46,7 @@ Home
                     @endforeach
                 </tbody>
             </table>
-            {{$prices}}
+            {{$imports}}
         </div>
         <!-- /.box-body -->
     </div>

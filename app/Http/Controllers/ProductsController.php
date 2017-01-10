@@ -60,7 +60,7 @@ class ProductsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $this->validate($request->all(), Product::$rules);
+        $this->validate($request, Product::$rules);
         $product = $this->productRepository->create($request->all());
         if ($request->hasFile('image')) {
             foreach ($request->file('image') as $image) {
@@ -90,8 +90,10 @@ class ProductsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        $product = $this->productRepository->find($id);
+        $categories = $this->categoryRepository->all();
+        $product    = $this->productRepository->find($id);
         return view('products.edit')
+                        ->with('categories', $categories)
                         ->with('product', $product);
     }
 

@@ -17,8 +17,8 @@ class CreateProductsTable extends Migration {
 			$table->increments('id');
 			$table->string('name')->unique('name');
 			$table->string('description', 500);
-			$table->integer('quanlity');
-			$table->integer('status');
+			$table->integer('quanlity')->default(0);
+			$table->integer('status')->default(1);
 			$table->integer('category_id')->unsigned();
 			$table->timestamps();
 		});
