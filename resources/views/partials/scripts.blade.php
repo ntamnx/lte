@@ -7,6 +7,7 @@
 <script src="{{ asset('/plugins/bootstrap-fileinput-master/js/fileinput.min.js')}}" type="text/javascript"></script>
 <script src="{{ asset('/plugins/jQueryUI/jquery-ui.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('/plugins/bootbox/bootbox.min.js')}}" type="text/javascript"></script>
+<script src="{{ asset('/plugins/toastr/toastr.min.js')}}" type="text/javascript"></script>
 <!--ckeditor-->
 <script src="https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js"></script>
 <script src="{{ asset('../resources/assets/js/routes.js')}}" type="text/javascript"></script>

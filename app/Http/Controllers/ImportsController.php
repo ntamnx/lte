@@ -9,6 +9,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use App\Entities\Import;
 use App\Repositories\ImportDetailRopository;
 use App\Entities\ImportDetail;
+use App\Repositories\SupplyRepository;
 
 class ImportsController extends Controller {
 
@@ -17,14 +18,16 @@ class ImportsController extends Controller {
      */
     protected $importRepository;
     protected $importDetailRepository;
+    protected $supplyRepository;
 
     /**
      * 
      * @param ImportRopository $importRepository
      */
-    public function __construct(ImportRopository $importRepository, ImportDetailRopository $importDetailRepository) {
+    public function __construct(ImportRopository $importRepository, ImportDetailRopository $importDetailRepository, SupplyRepository $supplyRepository) {
         $this->importRepository       = $importRepository;
         $this->importDetailRepository = $importDetailRepository;
+        $this->supplyRepository       = $supplyRepository;
     }
 
     /**
@@ -34,9 +37,9 @@ class ImportsController extends Controller {
      */
     public function index(Request $request) {
         $this->importRepository->pushCriteria(new RequestCriteria($request));
-        $bills = $this->importRepository->paginate(config('common.page_size'));
+        $imports = $this->importRepository->paginate(config('common.page_size'));
         return view('bills.index')
-                        ->with('bills', $bills);
+                        ->with('imports', $imports);
     }
 
     /**
@@ -45,7 +48,9 @@ class ImportsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('bills.create');
+        $supplies = $this->supplyRepository->orderBy('id', 'desc')->all();
+        return view('imports.add')
+                        ->with('supplies', $supplies);
     }
 
     /**

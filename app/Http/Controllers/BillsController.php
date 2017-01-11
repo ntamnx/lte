@@ -8,6 +8,10 @@ use App\Repositories\BillRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Entities\Bill;
 use App\Repositories\BillDetailRepository;
+use App\Repositories\CustomerRepository;
+use App\Repositories\ProductRepository;
+use App\Entities\BillDetail;
+use DB;
 
 class BillsController extends Controller {
 
@@ -17,14 +21,19 @@ class BillsController extends Controller {
      */
     protected $billRepository;
     protected $billDetailRepository;
+    protected $customerRepository;
+    protected $productRepository;
 
     /**
      * 
      * @param BillRepository $billRepository
      */
-    public function __construct(BillRepository $billRepository, BillDetailRepository $billDetailRepository) {
-        $this->billRepository = $billRepository;
+    public function __construct(BillRepository $billRepository, BillDetailRepository $billDetailRepository, CustomerRepository $customerRepository, ProductRepository $productRepository) {
+        parent::__construct();
+        $this->billRepository       = $billRepository;
         $this->billDetailRepository = $billDetailRepository;
+        $this->customerRepository   = $customerRepository;
+        $this->productRepository    = $productRepository;
     }
 
     /**
@@ -34,7 +43,7 @@ class BillsController extends Controller {
      */
     public function index(Request $request) {
         $this->billRepository->pushCriteria(new RequestCriteria($request));
-        $bills = $this->billRepository->paginate(config('common.page_size'));
+        $bills = $this->billRepository->orderBy('id')->paginate(config('common.page_size'));
         return view('bills.index')
                         ->with('bills', $bills);
     }
@@ -45,7 +54,12 @@ class BillsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        return view('bill.add');
+        $customers = $this->customerRepository->orderBy('id', 'desc')->all();
+        $products  = $this->productRepository->orderBy('id', 'desc')->all();
+
+        return view('bills.add')
+                        ->with('products', $products)
+                        ->with('customers', $customers);
     }
 
     /**
@@ -55,18 +69,25 @@ class BillsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
+//        dd($request->all());
         DB::beginTransaction();
         try {
             $this->validate($request, Bill::$rules);
-            $this->billRepository->create($request->all());
+//            $bill = $this->billRepository->create([
+//                'user_id'     => \Auth::user()->id,
+//                'customer_id' => $request->customer_id,
+//                'total_money' => $request->total_money,
+//            ]);
+            dd($request->all());
             foreach ($request->billDetail as $billDetail) {
+
                 $this->validate($billDetail, BillDetail::$rules);
-                $this->billDetailRepository->create($billDetail);
+                $this->billDetailRepository->create(array_merge($billDetail, ['bill_id' => $bill->id]));
             }
             DB::commit();
         } catch (Exception $ex) {
             DB::rollback();
-            dd($ex->getMessage());
+//            dd($ex->getMessage());
             return;
         }
         \Session::flash('flash_success', trans('common.CREATE_SUCCESS'));
@@ -118,6 +139,21 @@ class BillsController extends Controller {
     public function destroy($id) {
         $this->billRepository->delete($id);
         \Session::flash('flash_success', trans('common.DELETE_SUCCESS'));
+    }
+
+    /**
+     * Function get product by id
+     */
+    public function product(Request $request) {
+        $id      = $request->idProduct;
+        $product = $this->productRepository->with(['prices' => function ($query) {
+                        $query->orderBy('id', 'desc');
+                        $query->first();
+                    }])->find($id);
+        return [
+            'quanlityStill' => $product->quanlity,
+            'price'         => intval($product->prices[0]->price - ($product->prices[0]->price / 100 * $product->prices[0]->sale)),
+        ];
     }
 
 }

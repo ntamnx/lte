@@ -20,6 +20,7 @@
     <link href="{{ asset('/plugins/iCheck/square/blue.css') }}" rel="stylesheet" type="text/css" />
     <!--jquery ui-->
     <link href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/plugins/toastr/toastr.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/css/style.css')}}" rel="stylesheet" type="text/css" />
     @yield('css')
 

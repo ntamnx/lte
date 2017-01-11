@@ -19,10 +19,10 @@ use Illuminate\Database\Eloquent\Model;
 class Bill extends Model {
 
     public static $rules = [
-        'customer_id' => 'required|exits,customers,id',
-        'user_id'     => 'required|exits,users,id',
-        'status'      => 'required|numeric|min:-1|max:1',
-        'total_money' => 'total_money|numeric',
+        'customer_id' => 'required|exists:customers,id',
+        'user_id'     => 'exits,users,id',
+        'status'      => 'numeric|min:-1|max:1',
+        'total_money' => 'required|numeric',
     ];
 
     /**

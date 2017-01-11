@@ -56,4 +56,11 @@ class Product extends Model implements HasMedia {
         return $this->belongsTo(Category::class);
     }
 
+    /**
+     * get all pricess
+     */
+    public function prices() {
+        return $this->hasMany(Price::class);
+    }
+
 }
