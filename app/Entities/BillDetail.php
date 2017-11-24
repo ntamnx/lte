@@ -15,19 +15,39 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $status
  * @property \Carbon\Carbon $created_at
  * @property \Carbon\Carbon $updated_at
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\BillDetail whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\BillDetail whereBillId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\BillDetail whereProductId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\BillDetail wherePrice($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\BillDetail whereQuanlity($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\BillDetail whereStatus($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\BillDetail whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\BillDetail whereUpdatedAt($value)
- * @mixin \Eloquent
  */
 class BillDetail extends Model {
 
-    protected $table  = 'bill_detail';
+    protected $table = 'bill_detail';
+
+    /**
+     *
+     * @var type 
+     */
+    public static $rules = [
+        'bill_id'    => 'required|exits,bills,id',
+        'product_id' => 'required|exits,products,id',
+        'price'      => 'required|numeric',
+        'quanlity'   => 'required|numeric',
+        'status'     => 'required|numeric|between:-1,2',
+    ];
+
+    /**
+     *
+     * @var type 
+     */
     public $timestamp = false;
+
+    /**
+     *
+     * @var type 
+     */
+    public $fillable  = [
+        'bill_id',
+        'product_id',
+        'price',
+        'quanlity',
+        'status',
+    ];
 
 }

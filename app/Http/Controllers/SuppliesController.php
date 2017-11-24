@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Repositories\SupplyRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
+use App\Entities\Supply;
+
 class SuppliesController extends Controller {
 
     /**
@@ -29,7 +31,9 @@ class SuppliesController extends Controller {
      */
     public function index(Request $request) {
         $this->supplyRepository->pushCriteria(new RequestCriteria(($request)));
-        
+        $supplies = $this->supplyRepository->paginate(config('common.page_size'));
+        return view('supplies.index')
+                        ->with('supplies', $supplies);
     }
 
     /**
@@ -48,7 +52,10 @@ class SuppliesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+        $this->validate($request, Supply::$rules);
+        $this->supplyRepository->create($request->all());
+        \Session::flash('flash_success', trans('common.CREATE_SUCCESS'));
+        return redirect()->route('admin.supplies.index');
     }
 
     /**
@@ -68,7 +75,9 @@ class SuppliesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        //
+        $supply = $this->supplyRepository->find($id);
+        return view('supplies.edit')
+                        ->with('supply', $supply);
     }
 
     /**
@@ -79,7 +88,11 @@ class SuppliesController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        //
+        $rules = ['name' => 'required|unique:supplies,name,' . $id] + Supply::$rules;
+        $this->validate($request, $rules);
+        $this->supplyRepository->update($request->all(), $id);
+        \Session::flash('flash_success', trans('common.UPDATE_SUCCESS'));
+        return redirect()->route('admin.supplies.index');
     }
 
     /**

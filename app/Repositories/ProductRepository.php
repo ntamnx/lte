@@ -23,4 +23,5 @@ class ProductRepository extends BaseRepository {
         return \App\Entities\Product::class;
     }
 
+
 }

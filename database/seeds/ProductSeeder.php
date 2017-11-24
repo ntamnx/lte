@@ -16,21 +16,31 @@ class ProductSeeder extends Seeder {
         $faker      = Faker\Factory::create('vi_VN');
         $categories = App\Entities\Category::all();
         $files      = collect(\File::allFiles(public_path('img')));
-        foreach ($categories as $category => $indexCategory) {
-            foreach (range(0, 200) as $indexOfProduct) {
+        foreach ($categories as $category) {
+            foreach (range(0, 50) as $indexOfProduct) {
                 $product = \App\Entities\Product::create([
-                            'name'        => $faker->name,
+                            'name'        => $faker->unique()->name,
                             'description' => $faker->sentence,
                             'quanlity'    => 0,
                             'status'      => 1,
                             'category_id' => $category->id,
                 ]);
-                foreach (range(4, 7) as $indexofImage) {
+                foreach (range(1, 5) as $indexofImage) {
+                    \App\Entities\Price::create([
+                        'product_id' => $product->id,
+                        'sale'       => $faker->numberBetween(10, 20),
+                        'price'      => $faker->numberBetween(100000, 900000),
+                        'created_at' => $faker->dateTimeBetween('-1 month', 'now'),
+                        'updated_at' => $faker->dateTimeBetween('-1 month', 'now'),
+                    ]);
+                }
+                foreach (range(1, 5) as $indexofImage) {
                     $product->addMediaFromUrl($files->random())->toCollection('products');
                 }
                 echo 'Products ' . $indexOfProduct . PHP_EOL;
             }
         }
+        echo "End Product" . PHP_EOL;
     }
 
 }

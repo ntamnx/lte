@@ -14,14 +14,15 @@ class SupplySeeder extends Seeder {
         \DB::statement('TRUNCATE TABLE supplies');
         \DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         $faker = Faker\Factory::create('vi_VN');
-        foreach (range(0, 20) as $index) {
+        foreach (range(0, 50) as $index) {
             App\Entities\Supply::create([
-                'name'    => $faker->title,
+                'name'    => $faker->unique()->name,
                 'phone'   => $faker->phoneNumber,
                 'address' => $faker->address,
             ]);
             echo 'Supply ' . $index . PHP_EOL;
         }
+         echo "End Supply".PHP_EOL;
     }
 
 }

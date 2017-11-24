@@ -14,7 +14,7 @@ class CreateImportDetailTable extends Migration {
 	{
 		Schema::create('import_detail', function(Blueprint $table)
 		{
-			$table->integer('id')->unsigned()->primary();
+			$table->increments('id');
 			$table->integer('product_id')->unsigned()->index('FK_import_detail_products');
 			$table->integer('quantity')->unsigned();
 			$table->integer('price')->unsigned();

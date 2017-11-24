@@ -16,12 +16,13 @@ class CustomerSeeder extends Seeder {
         $faker = Faker\Factory::create('vi_VN');
         foreach (range(0, 200) as $index) {
             App\Entities\Customer::create([
-                'name'    => $faker->title,
+                'name'    => $faker->name,
                 'phone'   => $faker->phoneNumber,
                 'address' => $faker->address,
             ]);
             echo 'Customer ' . $index . PHP_EOL;
         }
+        echo "End Customer" . PHP_EOL;
     }
 
 }

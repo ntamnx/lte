@@ -12,4 +12,8 @@
  * @author nguyen.xuan.tam
  */
 return[
+    'selectProduct'  => 'Please select product',
+    'selectCustomer' => 'Please select customer',
+    'inputQuanlity'  => 'Please input Quanlity',
+    'productInSelect'  => 'Product in list select',
 ];

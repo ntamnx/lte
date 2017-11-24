@@ -16,18 +16,21 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @property \Carbon\Carbon $updated_at
  * @property int $role_id
  * @property int $active
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\User whereId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\User whereName($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\User whereEmail($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\User wherePassword($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\User whereRememberToken($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\User whereUpdatedAt($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\User whereRoleId($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Entities\User whereActive($value)
  * @mixin \Eloquent
  */
 class User extends Authenticatable {
+
+    /**
+     *
+     * @var type 
+     */
+    protected $rules = [
+        'name'     => 'required',
+        'email'    => 'required|unique,users,email|email',
+        'password' => 'required',
+        'role_id'  => 'required',
+        'active'   => 'required',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -36,6 +39,8 @@ class User extends Authenticatable {
      */
     protected $fillable = [
         'name', 'email', 'password',
+        'role_id' => 'required',
+        'active'  => 'required',
     ];
 
     /**
@@ -46,6 +51,5 @@ class User extends Authenticatable {
     protected $hidden = [
         'password', 'remember_token',
     ];
-    
 
 }

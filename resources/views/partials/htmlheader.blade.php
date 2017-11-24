@@ -4,6 +4,7 @@
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- Bootstrap 3.3.4 -->
     <link href="{{ asset('/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/plugins/bootstrap-fileinput-master/css/fileinput.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- Font Awesome Icons -->
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons -->
@@ -19,6 +20,7 @@
     <link href="{{ asset('/plugins/iCheck/square/blue.css') }}" rel="stylesheet" type="text/css" />
     <!--jquery ui-->
     <link href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('/plugins/toastr/toastr.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('/css/style.css')}}" rel="stylesheet" type="text/css" />
     @yield('css')
 
